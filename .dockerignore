@@ -1,0 +1,14 @@
+.git
+.gitignore
+.github
+__pycache__
+*.pyc
+venv
+.venv
+data
+data-test
+.env
+.env.*
+README.md
+LICENSE
+NOTICE

@@ -1,0 +1,36 @@
+services:
+  cutout-cpu:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    profiles: ["cpu"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - model-cache:/data/hf-cache
+    environment:
+      - CUTOUT_ALLOWED_ORIGINS=${CUTOUT_ALLOWED_ORIGINS:-}
+    restart: unless-stopped
+
+  cutout-gpu:
+    build:
+      context: .
+      dockerfile: Dockerfile.gpu
+    profiles: ["gpu"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - model-cache:/data/hf-cache
+    environment:
+      - CUTOUT_ALLOWED_ORIGINS=${CUTOUT_ALLOWED_ORIGINS:-}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: ["gpu"]
+    restart: unless-stopped
+
+volumes:
+  model-cache:

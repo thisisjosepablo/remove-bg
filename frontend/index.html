@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cutout Studio — free AI background removal</title>
+  <meta name="description" content="Self-hosted, open-source background removal with AI auto-cutout and manual refinement." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>✂️ Cutout Studio</h1>
+    <a href="#" target="_blank" rel="noopener" id="github-link">GitHub</a>
+  </header>
+
+  <main>
+    <section id="dropzone">
+      <div class="icon">📷</div>
+      <p><strong>Click to upload</strong> or drag an image here</p>
+      <p>JPG, PNG or WebP — processed locally on this server</p>
+      <input type="file" id="file-input" accept="image/*" hidden />
+    </section>
+
+    <section id="editor" class="hidden">
+      <div class="toolbar">
+        <div class="tabs">
+          <button class="tab active" id="tab-auto" type="button">Auto</button>
+          <button class="tab" id="tab-refine" type="button">Refine</button>
+        </div>
+        <div class="spacer"></div>
+        <button class="btn small" id="new-image-btn" type="button">New image</button>
+        <button class="btn primary" id="download-btn" type="button" disabled>Download PNG</button>
+      </div>
+
+      <div class="status-line" id="status-line"></div>
+
+      <!-- Auto view -->
+      <div id="auto-view">
+        <div class="stage">
+          <img id="auto-preview" alt="Cutout result" />
+        </div>
+        <div class="toolbar">
+          <button class="btn small" id="reprocess-btn" type="button">Reprocess</button>
+        </div>
+      </div>
+
+      <!-- Refine view -->
+      <div id="refine-view" class="hidden">
+        <div class="toolbar">
+          <button class="btn small active" id="mode-include-btn" type="button">+ Include</button>
+          <button class="btn small" id="mode-exclude-btn" type="button">− Exclude</button>
+          <button class="btn small" id="mode-box-btn" type="button">▭ Box</button>
+          <div class="spacer"></div>
+          <button class="btn small" id="undo-btn" type="button">Undo</button>
+          <button class="btn small" id="reset-btn" type="button">Reset</button>
+          <button class="btn small" id="restore-auto-btn" type="button">Restore auto</button>
+        </div>
+        <div class="refine-grid">
+          <div class="stage">
+            <canvas id="refine-canvas"></canvas>
+          </div>
+          <div class="stage">
+            <img id="refine-result" alt="Refined result preview" />
+          </div>
+        </div>
+        <p class="legend">
+          <span class="dot include"></span>click = keep this area &nbsp;
+          <span class="dot exclude"></span>click = remove this area &nbsp;
+          Box = drag a rectangle around the subject
+        </p>
+        <div class="alt-thumbs" id="alt-thumbs"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Cutout Studio — open source, self-hosted background removal.
+    Powered by <a href="https://github.com/ZhengPeng7/BiRefNet" target="_blank" rel="noopener">BiRefNet</a>
+    and <a href="https://github.com/facebookresearch/sam2" target="_blank" rel="noopener">SAM2</a>.
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
